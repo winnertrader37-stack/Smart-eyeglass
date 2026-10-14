@@ -1,12 +1,11 @@
 {
   "name": "Naol Smart Glasses AI",
-  "short_name": "Naol Glasses",
-  "description": "Smart glasses style AI interface",
+  "short_name": "Naol AI",
+  "description": "Personal AI Smart Glasses Assistant",
   "start_url": "./",
-  "scope": "./",
   "display": "standalone",
-  "background_color": "#06110e",
-  "theme_color": "#06110e",
+  "background_color": "#06110b",
+  "theme_color": "#06110b",
   "orientation": "portrait",
   "icons": []
 }
