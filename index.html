@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#06110e">
+
+<title>Naol Smart Glasses AI</title>
+
+<link rel="manifest" href="manifest.json">
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #06110e;
+    color: #eafff7;
+    font-family: Arial, sans-serif;
+}
+
+header {
+    text-align: center;
+    padding: 20px;
+    color: #62ffd0;
+    letter-spacing: 2px;
+    border-bottom: 1px solid #245b4b;
+}
+
+main {
+    max-width: 650px;
+    margin: auto;
+    padding: 20px;
+}
+
+.hero {
+    text-align: center;
+    padding: 25px 0;
+}
+
+h1 {
+    font-size: 32px;
+}
+
+h1 span {
+    color: #62ffd0;
+}
+
+.orb {
+    width: 120px;
+    height: 120px;
+    margin: 25px auto;
+    border: 2px solid #62ffd0;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    box-shadow: 0 0 30px #62ffd055;
+    font-size: 45px;
+    color: #62ffd0;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.card {
+    padding: 16px;
+    background: #0c211b;
+    border: 1px solid #245b4b;
+    border-radius: 15px;
+}
+
+.card h3 {
+    color: #62ffd0;
+    font-size: 15px;
+}
+
+.card p {
+    color: #a9c9bd;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+button {
+    background: #123c30;
+    color: white;
+    border: 1px solid #62ffd0;
+    border-radius: 10px;
+    padding: 12px;
+    margin: 5px 2px;
+    cursor: pointer;
+}
+
+button:active {
+    background: #17664e;
+}
+
+input {
+    width: 68%;
+    padding: 12px;
+    border-radius: 10px;
+    background: #06110e;
+    border: 1px solid #245b4b;
+    color: white;
+}
+
+#output {
+    margin-top: 15px;
+    padding: 15px;
+    background: #0c211b;
+    border-radius: 12px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+video {
+    width: 100%;
+    margin-top: 15px;
+    border-radius: 12px;
+    display: none;
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    color: #72998a;
+    font-size: 11px;
+}
+
+@media(max-width:350px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    h1 {
+        font-size: 25px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    NAOL • SMART GLASSES AI
+</header>
+
+<main>
+
+<section class="hero">
+
+    <p>PERSONAL AI ASSISTANT</p>
+
+    <h1>SMART <span>GLASSES</span></h1>
+
+    <p>Futuristic mobile interface</p>
+
+    <div class="orb">◉</div>
+
+    <button onclick="startVoice()">
+        🎙 SPEAK
+    </button>
+
+    <button onclick="testVoice()">
+        🔊 TEST VOICE
+    </button>
+
+</section>
+
+<section class="grid">
+
+    <div class="card">
+        <h3>🤖 AI ASSISTANT</h3>
+        <p>Use voice commands and interact with the assistant.</p>
+    </div>
+
+    <div class="card">
+        <h3>🌍 TRANSLATOR</h3>
+        <p>Voice translation features can be connected in a later version.</p>
+    </div>
+
+    <div class="card">
+        <h3>📷 CAMERA</h3>
+        <p>Open your phone camera for a live preview.</p>
+        <button onclick="openCamera()">Open camera</button>
+        <button onclick="stopCamera()">Stop</button>
+    </div>
+
+    <div class="card">
+        <h3>🕒 TIME</h3>
+        <p id="clock">Loading...</p>
+        <button onclick="tellTime()">Tell time</button>
+    </div>
+
+</section>
+
+<section style="margin-top:25px">
+
+    <h3>ASSISTANT CONSOLE</h3>
+
+    <input
+        id="message"
+        placeholder="Type a command..."
+    >
+
+    <button onclick="sendMessage()">Send</button>
+
+    <div id="output">
+        Welcome to Naol Smart Glasses AI!
+    </div>
+
+</section>
+
+<video id="camera" autoplay playsinline></video>
+
+</main>
+
+<footer>
+    NAOL SMART GLASSES AI • VERSION 1.0
+</footer>
+
+<script>
+
+const output = document.getElementById("output");
+
+function respond(text) {
+    output.innerText = text;
+}
+
+function speak(text) {
+    if (!("speechSynthesis" in window)) {
+        respond(text + "\nSpeech output is not supported.");
+        return;
+    }
+
+    speechSynthesis.cancel();
+
+    const utterance = new SpeechSynthesisUtterance(text);
+
+    speechSynthesis.speak(utterance);
+}
+
+function testVoice() {
+    speak("Welcome to Naol Smart Glasses AI.");
+}
+
+function tellTime() {
+    const now = new Date();
+
+    const text = "Current time is " +
+        now.toLocaleString();
+
+    respond(text);
+
+    speak(text);
+}
+
+setInterval(function() {
+    document.getElementById("clock").innerText =
+        new Date().toLocaleTimeString();
+}, 1000);
+
+function sendMessage() {
+
+    const input =
+        document.getElementById("message");
+
+    const message =
+        input.value.trim().toLowerCase();
+
+    if (!message) {
+        respond("Please enter a command.");
+        return;
+    }
+
+    if (message.includes("time")) {
+        tellTime();
+    }
+
+    else if (
+        message.includes("camera") ||
+        message.includes("photo")
+    ) {
+        openCamera();
+    }
+
+    else if (
+        message.includes("hello") ||
+        message.includes("hi")
+    ) {
+        respond("Hello! Welcome to Naol Smart Glasses AI.");
+        speak("Hello! Welcome to Naol Smart Glasses AI.");
+    }
+
+    else if (message.includes("help")) {
+        respond(
+            "Available commands:\n" +
+            "1. What time is it?\n" +
+            "2. Open camera\n" +
+            "3. Hello\n" +
+            "4. Test voice\n\n" +
+            "AI chat and real translation need additional services."
+        );
+    }
+
+    else {
+        respond(
+            "Command received: " + input.value +
+            "\nA real AI service is not connected yet."
+        );
+    }
+
+    input.value = "";
+}
+
+let cameraStream = null;
+
+async function openCamera() {
+
+    try {
+
+        cameraStream =
+            await navigator.mediaDevices.getUserMedia({
+                video: {
+                    facingMode: "environment"
+                },
+                audio: false
+            });
+
+        const video =
+            document.getElementById("camera");
+
+        video.srcObject = cameraStream;
+
+        video.style.display = "block";
+
+        respond("Camera is running.");
+
+    } catch (error) {
+
+        respond(
+            "Camera could not open. " +
+            "Use HTTPS and allow camera permission."
+        );
+
+    }
+}
+
+function stopCamera() {
+
+    if (cameraStream) {
+
+        cameraStream.getTracks().forEach(
+            track => track.stop()
+        );
+
+        cameraStream = null;
+
+    }
+
+    document.getElementById("camera").style.display = "none";
+
+    respond("Camera stopped.");
+}
+
+function startVoice() {
+
+    const Recognition =
+        window.SpeechRecognition ||
+        window.webkitSpeechRecognition;
+
+    if (!Recognition) {
+
+        respond(
+            "Voice recognition is not supported in this browser. Try Chrome."
+        );
+
+        return;
+    }
+
+    const recognition = new Recognition();
+
+    recognition.lang = "en-US";
+
+    recognition.onresult = function(event) {
+
+        const text =
+            event.results[0][0].transcript;
+
+        document.getElementById("message").value = text;
+
+        respond("You said: " + text);
+
+        sendMessage();
+
+    };
+
+    recognition.onerror = function() {
+
+        respond(
+            "Voice recognition failed. Check microphone permission."
+        );
+
+    };
+
+    recognition.start();
+}
+
+if ("serviceWorker" in navigator) {
+
+    navigator.serviceWorker.register("./sw.js")
+        .catch(function() {});
+
+}
+
+</script>
+
+</body>
+</html>
