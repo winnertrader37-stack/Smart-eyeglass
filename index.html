@@ -3,142 +3,165 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#06110e">
 
 <title>Naol Smart Glasses AI</title>
+
+<meta name="theme-color" content="#06110b">
+<meta name="description" content="Naol Smart Glasses AI Assistant">
 
 <link rel="manifest" href="manifest.json">
 
 <style>
+:root {
+    --bg: #06110b;
+    --panel: #0b1d13;
+    --green: #39ff88;
+    --text: #eafff0;
+    --muted: #94b9a0;
+    --border: #1b5734;
+}
+
 * {
     box-sizing: border-box;
 }
 
 body {
     margin: 0;
-    background: #06110e;
-    color: #eafff7;
+    padding: 16px;
+    background: var(--bg);
+    color: var(--text);
     font-family: Arial, sans-serif;
 }
 
 header {
     text-align: center;
-    padding: 20px;
-    color: #62ffd0;
-    letter-spacing: 2px;
-    border-bottom: 1px solid #245b4b;
+    padding: 15px 5px;
 }
 
-main {
-    max-width: 650px;
-    margin: auto;
-    padding: 20px;
+header h1 {
+    color: var(--green);
+    font-size: 25px;
+    margin-bottom: 6px;
+    text-shadow: 0 0 12px #39ff8870;
 }
 
-.hero {
-    text-align: center;
-    padding: 25px 0;
+header p {
+    color: var(--muted);
+    font-size: 13px;
 }
 
-h1 {
-    font-size: 32px;
+.card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 16px;
+    margin: 14px 0;
+    box-shadow: 0 0 15px #0005;
 }
 
-h1 span {
-    color: #62ffd0;
+h2 {
+    color: var(--green);
+    font-size: 18px;
+    margin-top: 0;
 }
 
 .orb {
-    width: 120px;
-    height: 120px;
-    margin: 25px auto;
-    border: 2px solid #62ffd0;
+    width: 125px;
+    height: 125px;
+    margin: 15px auto;
     border-radius: 50%;
-    display: grid;
-    place-items: center;
-    box-shadow: 0 0 30px #62ffd055;
-    font-size: 45px;
-    color: #62ffd0;
+    border: 3px solid var(--green);
+    box-shadow: 0 0 25px #39ff8860,
+                inset 0 0 20px #39ff8830;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 43px;
+    animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+    from { box-shadow: 0 0 10px #39ff8840; }
+    to   { box-shadow: 0 0 30px #39ff8890; }
+}
+
+button {
+    background: var(--green);
+    color: #031008;
+    border: none;
+    border-radius: 10px;
+    padding: 12px;
+    margin: 5px 0;
+    width: 100%;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+button.secondary {
+    background: #153624;
+    color: var(--text);
+    border: 1px solid var(--border);
+}
+
+input,
+textarea {
+    display: block;
+    width: 100%;
+    background: #041008;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    padding: 12px;
+    margin: 8px 0;
+    color: white;
+    font-size: 14px;
+}
+
+textarea {
+    min-height: 85px;
+    resize: vertical;
+}
+
+.status {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.result {
+    background: #041008;
+    border: 1px solid var(--border);
+    padding: 12px;
+    border-radius: 10px;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    min-height: 42px;
+    line-height: 1.5;
 }
 
 .grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    gap: 8px;
 }
 
-.card {
-    padding: 16px;
-    background: #0c211b;
-    border: 1px solid #245b4b;
-    border-radius: 15px;
-}
-
-.card h3 {
-    color: #62ffd0;
-    font-size: 15px;
-}
-
-.card p {
-    color: #a9c9bd;
-    font-size: 13px;
-    line-height: 1.5;
-}
-
-button {
-    background: #123c30;
-    color: white;
-    border: 1px solid #62ffd0;
-    border-radius: 10px;
-    padding: 12px;
-    margin: 5px 2px;
-    cursor: pointer;
-}
-
-button:active {
-    background: #17664e;
-}
-
-input {
-    width: 68%;
-    padding: 12px;
-    border-radius: 10px;
-    background: #06110e;
-    border: 1px solid #245b4b;
-    color: white;
-}
-
-#output {
-    margin-top: 15px;
-    padding: 15px;
-    background: #0c211b;
-    border-radius: 12px;
-    line-height: 1.6;
-    overflow-wrap: anywhere;
+.grid button {
+    min-height: 58px;
 }
 
 video {
     width: 100%;
-    margin-top: 15px;
+    background: black;
     border-radius: 12px;
-    display: none;
+    margin-top: 10px;
 }
 
 footer {
     text-align: center;
-    padding: 25px;
-    color: #72998a;
-    font-size: 11px;
-}
-
-@media(max-width:350px) {
-    .grid {
-        grid-template-columns: 1fr;
-    }
-
-    h1 {
-        font-size: 25px;
-    }
+    color: var(--muted);
+    font-size: 12px;
+    padding: 20px 5px;
 }
 </style>
 </head>
@@ -146,276 +169,628 @@ footer {
 <body>
 
 <header>
-    NAOL • SMART GLASSES AI
-</header>
-
-<main>
-
-<section class="hero">
-
-    <p>PERSONAL AI ASSISTANT</p>
-
-    <h1>SMART <span>GLASSES</span></h1>
-
-    <p>Futuristic mobile interface</p>
+    <h1>NAOL SMART GLASSES AI</h1>
+    <p>Your personal AI assistant</p>
 
     <div class="orb">◉</div>
 
-    <button onclick="startVoice()">
-        🎙 SPEAK
+    <div id="clock" class="status">Loading clock...</div>
+    <div id="mainStatus" class="status">System ready</div>
+</header>
+
+<!-- =========================
+     SECTION 1: VOICE ASSISTANT
+========================== -->
+
+<section class="card">
+    <h2>🎤 Voice Assistant</h2>
+
+    <p class="status">
+        Button kana tuqi; browser kee microphone access yoo gaafate Allow godhi.
+    </p>
+
+    <button onclick="startListening()">🎙️ SPEAK TO NAOL AI</button>
+
+    <button class="secondary" onclick="stopSpeaking()">
+        🔇 STOP SPEAKING
     </button>
 
-    <button onclick="testVoice()">
-        🔊 TEST VOICE
-    </button>
-
+    <div class="status">What you said:</div>
+    <div id="voiceResult" class="result">Waiting for voice command...</div>
 </section>
 
-<section class="grid">
 
-    <div class="card">
-        <h3>🤖 AI ASSISTANT</h3>
-        <p>Use voice commands and interact with the assistant.</p>
-    </div>
+<!-- =========================
+     SECTION 2: GEMINI AI
+========================== -->
 
-    <div class="card">
-        <h3>🌍 TRANSLATOR</h3>
-        <p>Voice translation features can be connected in a later version.</p>
-    </div>
+<section class="card">
+    <h2>🤖 Gemini AI Assistant</h2>
 
-    <div class="card">
-        <h3>📷 CAMERA</h3>
-        <p>Open your phone camera for a live preview.</p>
-        <button onclick="openCamera()">Open camera</button>
-        <button onclick="stopCamera()">Stop</button>
-    </div>
-
-    <div class="card">
-        <h3>🕒 TIME</h3>
-        <p id="clock">Loading...</p>
-        <button onclick="tellTime()">Tell time</button>
-    </div>
-
-</section>
-
-<section style="margin-top:25px">
-
-    <h3>ASSISTANT CONSOLE</h3>
+    <p class="status">
+        Gemini API key kee asitti galchi. Key kee public code GitHub keessatti
+        hin barreessin.
+    </p>
 
     <input
-        id="message"
-        placeholder="Type a command..."
+        type="password"
+        id="geminiKey"
+        placeholder="Enter Gemini API key"
+        autocomplete="off"
     >
 
-    <button onclick="sendMessage()">Send</button>
+    <textarea
+        id="aiQuestion"
+        placeholder="Ask Naol AI anything..."
+    ></textarea>
 
-    <div id="output">
-        Welcome to Naol Smart Glasses AI!
-    </div>
+    <button onclick="askGemini()">ASK GEMINI AI</button>
 
+    <button class="secondary" onclick="clearAI()">
+        CLEAR
+    </button>
+
+    <div class="status">AI response:</div>
+    <div id="aiResponse" class="result">Your answer will appear here.</div>
 </section>
 
-<video id="camera" autoplay playsinline></video>
 
-</main>
+<!-- =========================
+     SECTION 3: CAMERA
+========================== -->
+
+<section class="card">
+    <h2>📷 Smart Camera</h2>
+
+    <p class="status">
+        Camera fi microphone fayyadamuuf browser permission barbaachisa.
+        Website kee HTTPS irratti banamuu qaba.
+    </p>
+
+    <button onclick="openCamera()">OPEN CAMERA</button>
+
+    <button onclick="startRecording()">🔴 START RECORDING</button>
+
+    <button class="secondary" onclick="stopRecording()">
+        ⏹️ STOP & SAVE VIDEO
+    </button>
+
+    <button class="secondary" onclick="stopCamera()">
+        CLOSE CAMERA
+    </button>
+
+    <video id="camera" autoplay playsinline muted></video>
+
+    <div id="cameraStatus" class="status">
+        Camera is off.
+    </div>
+</section>
+
+
+<!-- =========================
+     SECTION 4: GPS NAVIGATION
+========================== -->
+
+<section class="card">
+    <h2>🗺️ GPS Navigation</h2>
+
+    <p class="status">
+        GPS kee argachuuf location permission hayyami.
+        Daandiin Google Maps irratti banama.
+    </p>
+
+    <button onclick="getMyLocation()">📍 FIND MY LOCATION</button>
+
+    <div id="locationResult" class="result">
+        Your location has not been checked yet.
+    </div>
+
+    <input
+        type="text"
+        id="destination"
+        placeholder="Enter destination"
+    >
+
+    <button onclick="navigateToDestination()">
+        🧭 NAVIGATE
+    </button>
+</section>
+
+
+<!-- =========================
+     SECTION 5: QUICK TOOLS
+========================== -->
+
+<section class="card">
+    <h2>⚡ Quick Tools</h2>
+
+    <div class="grid">
+        <button onclick="tellTime()">🕒 TIME</button>
+
+        <button onclick="speakText('Hello! I am Naol Smart Glasses AI.')">
+            🔊 TEST VOICE
+        </button>
+
+        <button onclick="window.open('https://maps.google.com','_blank')">
+            🗺️ OPEN MAPS
+        </button>
+
+        <button onclick="window.open('https://ai.google.dev/','_blank')">
+            🤖 GEMINI INFO
+        </button>
+    </div>
+</section>
+
+
+<!-- =========================
+     SECTION 6: SYSTEM CONSOLE
+========================== -->
+
+<section class="card">
+    <h2>💻 System Console</h2>
+    <div id="console" class="result">Naol Smart Glasses AI initialized.</div>
+</section>
 
 <footer>
-    NAOL SMART GLASSES AI • VERSION 1.0
+    NAOL SMART GLASSES AI<br>
+    Personal AI Web Prototype
 </footer>
+
 
 <script>
 
-const output = document.getElementById("output");
+/* =========================
+   SECTION 7: BASIC SYSTEM
+========================== */
 
-function respond(text) {
-    output.innerText = text;
+let cameraStream = null;
+let mediaRecorder = null;
+let recordedChunks = [];
+let currentLocation = null;
+let recognition = null;
+
+function logMessage(message) {
+    document.getElementById("console").textContent =
+        new Date().toLocaleTimeString() + " — " + message;
+
+    document.getElementById("mainStatus").textContent = message;
 }
 
-function speak(text) {
+function updateClock() {
+    document.getElementById("clock").textContent =
+        new Date().toLocaleString();
+}
+
+setInterval(updateClock, 1000);
+updateClock();
+
+
+/* =========================
+   SECTION 8: SPEECH OUTPUT
+========================== */
+
+function speakText(text) {
     if (!("speechSynthesis" in window)) {
-        respond(text + "\nSpeech output is not supported.");
+        logMessage("Speech output is not supported by this browser.");
         return;
     }
 
-    speechSynthesis.cancel();
+    window.speechSynthesis.cancel();
 
-    const utterance = new SpeechSynthesisUtterance(text);
+    const speech = new SpeechSynthesisUtterance(text);
+    speech.lang = "en-US";
+    speech.rate = 1;
+    speech.pitch = 1;
 
-    speechSynthesis.speak(utterance);
+    window.speechSynthesis.speak(speech);
 }
 
-function testVoice() {
-    speak("Welcome to Naol Smart Glasses AI.");
+function stopSpeaking() {
+    window.speechSynthesis.cancel();
+    logMessage("Speech stopped.");
 }
 
 function tellTime() {
     const now = new Date();
+    const message = "The current time is " +
+        now.toLocaleTimeString();
 
-    const text = "Current time is " +
-        now.toLocaleString();
-
-    respond(text);
-
-    speak(text);
+    speakText(message);
+    logMessage(message);
 }
 
-setInterval(function() {
-    document.getElementById("clock").innerText =
-        new Date().toLocaleTimeString();
-}, 1000);
 
-function sendMessage() {
+/* =========================
+   SECTION 9: VOICE INPUT
+========================== */
 
-    const input =
-        document.getElementById("message");
-
-    const message =
-        input.value.trim().toLowerCase();
-
-    if (!message) {
-        respond("Please enter a command.");
-        return;
-    }
-
-    if (message.includes("time")) {
-        tellTime();
-    }
-
-    else if (
-        message.includes("camera") ||
-        message.includes("photo")
-    ) {
-        openCamera();
-    }
-
-    else if (
-        message.includes("hello") ||
-        message.includes("hi")
-    ) {
-        respond("Hello! Welcome to Naol Smart Glasses AI.");
-        speak("Hello! Welcome to Naol Smart Glasses AI.");
-    }
-
-    else if (message.includes("help")) {
-        respond(
-            "Available commands:\n" +
-            "1. What time is it?\n" +
-            "2. Open camera\n" +
-            "3. Hello\n" +
-            "4. Test voice\n\n" +
-            "AI chat and real translation need additional services."
-        );
-    }
-
-    else {
-        respond(
-            "Command received: " + input.value +
-            "\nA real AI service is not connected yet."
-        );
-    }
-
-    input.value = "";
-}
-
-let cameraStream = null;
-
-async function openCamera() {
-
-    try {
-
-        cameraStream =
-            await navigator.mediaDevices.getUserMedia({
-                video: {
-                    facingMode: "environment"
-                },
-                audio: false
-            });
-
-        const video =
-            document.getElementById("camera");
-
-        video.srcObject = cameraStream;
-
-        video.style.display = "block";
-
-        respond("Camera is running.");
-
-    } catch (error) {
-
-        respond(
-            "Camera could not open. " +
-            "Use HTTPS and allow camera permission."
-        );
-
-    }
-}
-
-function stopCamera() {
-
-    if (cameraStream) {
-
-        cameraStream.getTracks().forEach(
-            track => track.stop()
-        );
-
-        cameraStream = null;
-
-    }
-
-    document.getElementById("camera").style.display = "none";
-
-    respond("Camera stopped.");
-}
-
-function startVoice() {
-
-    const Recognition =
+function startListening() {
+    const SpeechRecognitionAPI =
         window.SpeechRecognition ||
         window.webkitSpeechRecognition;
 
-    if (!Recognition) {
-
-        respond(
-            "Voice recognition is not supported in this browser. Try Chrome."
+    if (!SpeechRecognitionAPI) {
+        alert(
+            "Voice recognition is not supported by this browser. " +
+            "Try a supported browser such as Chrome."
         );
-
         return;
     }
 
-    const recognition = new Recognition();
-
+    recognition = new SpeechRecognitionAPI();
     recognition.lang = "en-US";
+    recognition.continuous = false;
+    recognition.interimResults = false;
+
+    document.getElementById("voiceResult").textContent =
+        "Listening...";
+
+    logMessage("Listening for your command.");
 
     recognition.onresult = function(event) {
+        const command = event.results[0][0].transcript;
 
-        const text =
-            event.results[0][0].transcript;
+        document.getElementById("voiceResult").textContent = command;
 
-        document.getElementById("message").value = text;
-
-        respond("You said: " + text);
-
-        sendMessage();
-
+        handleVoiceCommand(command);
     };
 
-    recognition.onerror = function() {
+    recognition.onerror = function(event) {
+        logMessage("Voice error: " + event.error);
+    };
 
-        respond(
-            "Voice recognition failed. Check microphone permission."
-        );
-
+    recognition.onend = function() {
+        if (document.getElementById("mainStatus").textContent ===
+            "Listening for your command.") {
+            logMessage("Voice listening ended.");
+        }
     };
 
     recognition.start();
 }
 
-if ("serviceWorker" in navigator) {
+function handleVoiceCommand(command) {
+    const text = command.toLowerCase();
 
-    navigator.serviceWorker.register("./sw.js")
-        .catch(function() {});
+    if (text.includes("time")) {
+        tellTime();
+    } else if (text.includes("camera")) {
+        openCamera();
+        speakText("Opening camera.");
+    } else if (text.includes("location")) {
+        getMyLocation();
+        speakText("Checking your location.");
+    } else if (text.includes("map") || text.includes("navigation")) {
+        window.open("https://maps.google.com", "_blank");
+        speakText("Opening Google Maps.");
+    } else if (text.includes("hello")) {
+        speakText("Hello! How can I help you?");
+    } else {
+        document.getElementById("aiQuestion").value = command;
 
+        speakText(
+            "I heard your command. You can send it to Gemini AI."
+        );
+
+        logMessage("Voice command received.");
+    }
 }
+
+
+/* =========================
+   SECTION 10: GEMINI AI
+========================== */
+
+async function askGemini() {
+    const apiKey = document.getElementById("geminiKey").value.trim();
+    const question = document.getElementById("aiQuestion").value.trim();
+    const output = document.getElementById("aiResponse");
+
+    if (!apiKey) {
+        output.textContent = "Please enter your Gemini API key.";
+        return;
+    }
+
+    if (!question) {
+        output.textContent = "Please enter a question.";
+        return;
+    }
+
+    output.textContent = "Gemini is thinking...";
+    logMessage("Connecting to Gemini AI.");
+
+    try {
+        const response = await fetch(
+            "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "x-goog-api-key": apiKey
+                },
+                body: JSON.stringify({
+                    contents: [{
+                        parts: [{
+                            text:
+                                "You are Naol Smart Glasses AI, a helpful " +
+                                "mobile assistant. Answer clearly and concisely. " +
+                                "If the user writes Afaan Oromoo, respond in " +
+                                "Afaan Oromoo. User question: " + question
+                        }]
+                    }]
+                })
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                data.error?.message || "Gemini request failed."
+            );
+        }
+
+        const answer =
+            data.candidates?.[0]?.content?.parts
+                ?.map(part => part.text || "")
+                .join("\n");
+
+        if (!answer) {
+            throw new Error("Gemini returned no text.");
+        }
+
+        output.textContent = answer;
+        speakText(answer);
+        logMessage("Gemini AI response received.");
+
+    } catch (error) {
+        output.textContent =
+            "Error: " + error.message +
+            "\nCheck your API key, internet connection, and API access.";
+
+        logMessage("Gemini AI request failed.");
+    }
+}
+
+function clearAI() {
+    document.getElementById("aiQuestion").value = "";
+    document.getElementById("aiResponse").textContent =
+        "Your answer will appear here.";
+}
+
+
+/* =========================
+   SECTION 11: CAMERA
+========================== */
+
+async function openCamera() {
+    try {
+        if (!navigator.mediaDevices ||
+            !navigator.mediaDevices.getUserMedia) {
+            throw new Error(
+                "Camera is unavailable. Open the website using HTTPS."
+            );
+        }
+
+        if (cameraStream) {
+            return;
+        }
+
+        cameraStream = await navigator.mediaDevices.getUserMedia({
+            video: {
+                facingMode: { ideal: "environment" }
+            },
+            audio: true
+        });
+
+        const video = document.getElementById("camera");
+        video.srcObject = cameraStream;
+
+        document.getElementById("cameraStatus").textContent =
+            "Camera is on.";
+
+        logMessage("Camera opened.");
+
+    } catch (error) {
+        document.getElementById("cameraStatus").textContent =
+            "Camera error: " + error.message;
+
+        logMessage("Could not open camera.");
+    }
+}
+
+function startRecording() {
+    if (!cameraStream) {
+        alert("First press OPEN CAMERA.");
+        return;
+    }
+
+    if (!window.MediaRecorder) {
+        alert("Video recording is not supported in this browser.");
+        return;
+    }
+
+    if (mediaRecorder &&
+        mediaRecorder.state === "recording") {
+        alert("Recording is already running.");
+        return;
+    }
+
+    recordedChunks = [];
+
+    try {
+        let options = {};
+
+        if (MediaRecorder.isTypeSupported("video/webm;codecs=vp8,opus")) {
+            options.mimeType = "video/webm;codecs=vp8,opus";
+        }
+
+        mediaRecorder = new MediaRecorder(cameraStream, options);
+
+        mediaRecorder.ondataavailable = function(event) {
+            if (event.data && event.data.size > 0) {
+                recordedChunks.push(event.data);
+            }
+        };
+
+        mediaRecorder.onstop = function() {
+            if (recordedChunks.length === 0) {
+                document.getElementById("cameraStatus").textContent =
+                    "No video data was recorded.";
+                return;
+            }
+
+            const blob = new Blob(recordedChunks, {
+                type: mediaRecorder.mimeType || "video/webm"
+            });
+
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+
+            link.href = url;
+            link.download = "Naol-Smart-Glasses-Recording.webm";
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+
+            setTimeout(() => URL.revokeObjectURL(url), 60000);
+
+            document.getElementById("cameraStatus").textContent =
+                "Recording saved or download started.";
+
+            logMessage("Recording finished.");
+        };
+
+        mediaRecorder.start();
+
+        document.getElementById("cameraStatus").textContent =
+            "🔴 Recording...";
+
+        logMessage("Video recording started.");
+
+    } catch (error) {
+        document.getElementById("cameraStatus").textContent =
+            "Recording error: " + error.message;
+    }
+}
+
+function stopRecording() {
+    if (mediaRecorder &&
+        mediaRecorder.state === "recording") {
+        mediaRecorder.stop();
+        document.getElementById("cameraStatus").textContent =
+            "Preparing your video...";
+    } else {
+        alert("No recording is currently running.");
+    }
+}
+
+function stopCamera() {
+    if (mediaRecorder &&
+        mediaRecorder.state === "recording") {
+        mediaRecorder.stop();
+    }
+
+    if (cameraStream) {
+        cameraStream.getTracks().forEach(track => track.stop());
+        cameraStream = null;
+    }
+
+    document.getElementById("camera").srcObject = null;
+    document.getElementById("cameraStatus").textContent =
+        "Camera is off.";
+
+    logMessage("Camera closed.");
+}
+
+
+/* =========================
+   SECTION 12: GPS LOCATION
+========================== */
+
+function getMyLocation() {
+    const output = document.getElementById("locationResult");
+
+    if (!navigator.geolocation) {
+        output.textContent =
+            "Geolocation is not supported by this browser.";
+        return;
+    }
+
+    output.textContent = "Finding your location...";
+    logMessage("Checking GPS location.");
+
+    navigator.geolocation.getCurrentPosition(
+        function(position) {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+
+            currentLocation = {
+                latitude: latitude,
+                longitude: longitude
+            };
+
+            output.textContent =
+                "Latitude: " + latitude +
+                "\nLongitude: " + longitude +
+                "\nAccuracy: approximately " +
+                Math.round(position.coords.accuracy) + " metres.";
+
+            logMessage("Location found.");
+
+            speakText("Your location has been found.");
+        },
+
+        function(error) {
+            output.textContent =
+                "Location error: " + error.message +
+                "\nCheck location permission and GPS settings.";
+
+            logMessage("Location could not be found.");
+        },
+
+        {
+            enableHighAccuracy: true,
+            timeout: 15000,
+            maximumAge: 0
+        }
+    );
+}
+
+function navigateToDestination() {
+    const destination =
+        document.getElementById("destination").value.trim();
+
+    if (!destination) {
+        alert("Please enter your destination.");
+        return;
+    }
+
+    let url =
+        "https://www.google.com/maps/dir/?api=1" +
+        "&destination=" + encodeURIComponent(destination) +
+        "&travelmode=walking";
+
+    if (currentLocation) {
+        url +=
+            "&origin=" +
+            encodeURIComponent(
+                currentLocation.latitude + "," +
+                currentLocation.longitude
+            );
+    }
+
+    window.open(url, "_blank");
+
+    logMessage("Opening navigation.");
+}
+
+
+/* =========================
+   SECTION 13: INITIALIZATION
+========================== */
+
+logMessage("Naol Smart Glasses AI is ready.");
 
 </script>
 
